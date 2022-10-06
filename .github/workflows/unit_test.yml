@@ -7,6 +7,21 @@ on: # what events trigger this
     branches: [main]
     
 jobs:
+  functional:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0} # jobs are run independently in parallel; anytime want conda env need to change for job (only works for ubuntu)
+    steps:
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: swe4s 
+          environment-file: environment.yml # defualt env is test
+      - run: |
+         cd test/func
+         bash test_search.sh
+    
   codestyle:
     runs-on: ubuntu-latest
     defaults:
