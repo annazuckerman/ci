@@ -1,5 +1,5 @@
 name: Unit tests
- 
+# NOTE: this runs on some remote machine somewhere, not on your machine 
 on: # what events trigger this
   push:
     branches: [main]
@@ -9,6 +9,9 @@ on: # what events trigger this
 jobs:
   codestyle:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0} # jobs are run independently in parallel; anytime want conda env need to change for job (only works for ubuntu)
     steps:
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
